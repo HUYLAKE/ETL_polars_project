@@ -1,0 +1,2 @@
+polars==1.35.2
+connectorx==0.4.4
