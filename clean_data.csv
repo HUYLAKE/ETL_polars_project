@@ -1,0 +1,5 @@
+order_id,customer_id,order_date,quantity,price,total,status,revenue
+ORD1001,123,2024-01-10,2,10.5,21.0,completed,21.0
+ORD1008,987,2024-06-15,3,20.0,40.0,cancelled,60.0
+ORD1009,111,2024-07-07,10,100.0,900.0,completed,1000.0
+ORD1010,222,2024-05-10,2,8.0,15.0,pending,16.0
