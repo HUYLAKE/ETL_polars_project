@@ -29,12 +29,13 @@ Trong tình huống giả định, chúng ta sẽ vào vai 1 data engineer junio
 1. Imports
 Nhập các thư viện và module cần thiết cho ETL và validation.
 
-Python
+```Python
 
 import patito as pt
 import polars as pl
 from datetime import date
 from typing import Literal
+```
 2. Định nghĩa Validation Model (Patito)
 Tạo mô hình Order bằng Patito để xác định kiểu dữ liệu và các ràng buộc chi tiết cho từng cột (ví dụ: quantity phải là số nguyên lớn hơn hoặc bằng 1).
 
