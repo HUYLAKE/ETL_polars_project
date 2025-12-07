@@ -61,7 +61,7 @@ df
 ```
 4. Xác thực và Phân tách DataFrames (Validate)
 Thực hiện validation từng hàng dữ liệu. Dữ liệu sạch được thu thập vào valid_df, dữ liệu lỗi được đưa vào error_df cùng với thông tin lỗi.
-```pythonpython
+```python
 try:
     # Validation nhanh cho toàn bộ DataFrame
     Order.validate(df)
