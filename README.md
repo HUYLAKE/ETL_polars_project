@@ -26,8 +26,12 @@ Trong tình huống giả định, chúng ta sẽ vào vai 1 data engineer junio
 - Dùng patito để tạo model validate bằng dựa theo các business logic nhằm loại bỏ được những record lỗi đến từ nhập liệu sai
 
 💻 Quy Trình Code Chi Tiết
-1. Imports
-Nhập các thư viện và module cần thiết cho ETL và validation.
+Trước tiên cần pip install các thư viện cần thiết
+```cmd
+pip install polars patito jupyter
+
+
+1. Imports các thư viện và module cần thiết cho ETL và validation.
 
 ```Python
 
