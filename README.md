@@ -29,7 +29,7 @@ Trong tình huống giả định, chúng ta sẽ vào vai 1 data engineer junio
 Trước tiên cần pip install các thư viện cần thiết
 ```cmd
 pip install polars patito jupyter
-
+```
 
 1. Imports các thư viện và module cần thiết cho ETL và validation.
 
