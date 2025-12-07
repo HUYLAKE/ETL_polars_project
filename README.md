@@ -38,9 +38,7 @@ from typing import Literal
 ```
 2. Định nghĩa Validation Model (Patito)
 Tạo mô hình Order bằng Patito để xác định kiểu dữ liệu và các ràng buộc chi tiết cho từng cột (ví dụ: quantity phải là số nguyên lớn hơn hoặc bằng 1).
-
-Python
-
+```python
 class Order(pt.Model):
     order_id: str
     customer_id: int
@@ -49,18 +47,17 @@ class Order(pt.Model):
     price: float = pt.Field(gt=0)
     total: float = pt.Field(gt=0)
     status: Literal["pending", "processing", "completed", "cancelled"]
+```
 3. Đọc Dữ Liệu Nguồn (Extract)
 Đọc file CSV đầu vào (giả định có chứa lỗi) vào Polars DataFrame.
 
-Python
-
+```python
 df = pl.read_csv('data_error.csv')
 df
+```
 4. Xác thực và Phân tách DataFrames (Validate)
 Thực hiện validation từng hàng dữ liệu. Dữ liệu sạch được thu thập vào valid_df, dữ liệu lỗi được đưa vào error_df cùng với thông tin lỗi.
-
-Python
-
+```pythonpython
 try:
     # Validation nhanh cho toàn bộ DataFrame
     Order.validate(df)
@@ -86,25 +83,25 @@ valid_df
 
 error_df =pl.DataFrame(error_rows)
 error_df
+```
 5. Biến đổi Dữ liệu Sạch (Transform)
 Thực hiện phép tính toán cột doanh thu (revenue) bằng cách nhân price với quantity. Phép biến đổi này chỉ áp dụng trên dữ liệu đã được xác thực (valid_df).
 
-Python
-
+```Python
 gold_df = valid_df.with_columns(
     (pl.col("price") * pl.col("quantity")).alias("revenue")
 )
 gold_df
+```
 6. Ghi Dữ Liệu (Load)
 Lưu trữ kết quả đã biến đổi và dữ liệu lỗi ra các file CSV riêng biệt.
-
-Python
-
+```python
 # Lưu trữ dữ liệu lỗi (Quarantine)
 error_df.write_csv('filterd_data.csv')
 
 # Lưu trữ dữ liệu sạch đã được biến đổi (Gold Layer)
 gold_df.write_csv('clean_data.csv')
+```
 
 
 
