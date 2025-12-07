@@ -19,43 +19,42 @@ Project này trình bày một quy trình ETL (Extract, Transform, Load) đượ
 
 Yêu cầu Python 3.10 trở lên.
 
-```bash
-pip install polars patito
+
 Trong tình huống giả định, chúng ta sẽ vào vai 1 data engineer junior và được giao 1 task là xử lý 1 file `data_error.csv`
 - Yêu cấu của phòng ban là lọc ra các bảng record lỗi và các record sạch thành 2 file csv riêng biệt( `clean_data.csv` và `filtered_data.csv`) để có thể xử lý vì mỗi record có thể chứa insight quan trọng
 - Trong task này ta sẽ dùng Polars làm thao tác chính trong các bước ETL
 - Dùng patito để tạo model validate bằng dựa theo các business logic nhằm loại bỏ được những record lỗi đến từ nhập liệu sai
 
 Đầu tiên
-```bash
-pip install polars patito
+
+`pip install polars patito`
 
 Import các thư viện cần thiết cho task
-```bash
-import patito as pt
+
+`import patito as pt
 import polars as pl 
 from datetime import date
-from typing import Literal 
+from typing import Literal` 
 
 Tiếp theo tạo model patito để validate 
-```bash
-class Order(pt.Model):
+
+`class Order(pt.Model):
     order_id: str    # order_id là dạng string và sẽ báo lỗi nếu không nhập hoặc chỉ nhập số
     customer_id: int # customer_id phải là số 
     order_date: date # order_date phải theo định dạng (YYYY-mm-dd)
     quantity: int = pt.Field(ge=1) # quantity phải là số lớn nguyên dương
     price: float = pt.Field(gt=0) # price là số thập phân và lớn hơn 0
     total: float = pt.Field(gt=0)# tổng phải số thập phân và lớn hơn 0
-    status: Literal["pending", "processing", "completed", "cancelled"] # status phải nằm trong các trạng thái như ["pending", "processing", "completed", "cancelled"]
+    status: Literal["pending", "processing", "completed", "cancelled"] # status phải nằm trong các trạng thái như ["pending", "processing", "completed", "cancelled"]`
 
 Đọc file bằng Polars
-```bash
-df = pl.read_csv('data_error.csv')
-df
+
+`df = pl.read_csv('data_error.csv')
+df`
 
 Bắt đầu xác mimh dữ liệu và chia các dữ liệu sạch và hỏng ra các dataframe riêng 
-```bash
-try: 
+
+`try: 
     Order.validate(df)
     print('Xác thực thành công')
 except pt.DataFrameValidationError as e:
@@ -74,19 +73,19 @@ valid_df = pl.DataFrame(valid_rows)
 valid_df
 
 error_df =pl.DataFrame(error_rows)
-error_df
+error_df`
 
 Thực hiện transform trên dataframe chứa dữ liệu sạch `valid_df` lưu vào biến `gold_df`
-```bash
-gold_df = valid_df.with_columns(
+
+`gold_df = valid_df.with_columns(
     (pl.col("price") * pl.col("quantity")).alias("revenue")
 )
-gold_df
+gold_df`
 
 Ghi các dataframe ra 2 file csv(clean_data.csv chứa dữ liệu sạch, filtered_data.csv chứa dữ liệu hỏng)
-```bash
-error_df.write_csv('filterd_data.csv')
-gold_df.write_csv('clean_data.csv')
+
+`error_df.write_csv('filterd_data.csv')
+gold_df.write_csv('clean_data.csv')`
 
 
 
