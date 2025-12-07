@@ -26,8 +26,9 @@ Trong tình huống giả định, chúng ta sẽ vào vai 1 data engineer junio
 - Dùng patito để tạo model validate bằng dựa theo các business logic nhằm loại bỏ được những record lỗi đến từ nhập liệu sai
 
 Đầu tiên
-
-`pip install polars patito`
+```markdown
+```python
+pip install polars patito
 
 Import các thư viện cần thiết cho task
 
